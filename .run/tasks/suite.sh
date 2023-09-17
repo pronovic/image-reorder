@@ -10,6 +10,5 @@ task_suite() {
    run_task checks
    run_task build
    run_task test -c
-   run_task docs
 }
 

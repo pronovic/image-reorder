@@ -138,8 +138,6 @@ Basic tasks:
 
 Additional tasks:
 
-- run docs: Build the Sphinx documentation for readthedocs.io
-- run docs -o: Build the Sphinx documentation and open in a browser
 - run release: Tag and release the code, triggering GHA to publish artifacts
 ```
 
@@ -190,7 +188,7 @@ Structure**, mark both `src` and `tests` as source folders.  In the **Exclude
 Files** box, enter the following:
 
 ```
-LICENSE;NOTICE;PyPI.md;.coverage;.coveragerc;.github;.gitignore;.gitattributes;.htmlcov;.idea;.isort.cfg;.mypy.ini;.mypy_cache;.pre-commit-config.yaml;.pylintrc;.pytest_cache;.readthedocs.yml;.tabignore;build;dist;docs/_build;out;poetry.lock;poetry.toml;run;.run;.venv;.runtime
+LICENSE;NOTICE;PyPI.md;.coverage;.coveragerc;.github;.gitignore;.gitattributes;.htmlcov;.idea;.isort.cfg;.mypy.ini;.mypy_cache;.pre-commit-config.yaml;.pylintrc;.pytest_cache;.tabignore;build;dist;out;poetry.lock;poetry.toml;run;.run;.venv;.runtime
 ```
 
 When you're done, click **Ok**.  Then, go to the gear icon in the project panel 
@@ -350,12 +348,6 @@ change the path for `bash.exe`.
 |Output filters|`$FILE_PATH$:$LINE$:$COLUMN.*`|
 
 ## Release Process
-
-### Documentation
-
-Documentation at [Read the Docs](https://image-reorder.readthedocs.io/en/stable/)
-is generated via a GitHub hook.  So, there is no formal release process for the
-documentation.
 
 ### Code
 
