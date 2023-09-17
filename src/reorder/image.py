@@ -2,7 +2,7 @@
 # vim: set ft=python ts=4 sw=4 expandtab:
 import pathlib
 from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Any
+from typing import Any, Dict, List, Optional
 
 from PIL import Image
 from PIL.ExifTags import TAGS
@@ -45,6 +45,6 @@ def _get_exif_tags(path: pathlib.Path) -> Dict[str | int, Any]:
         for tag, value in info.items():
             decoded = TAGS.get(tag, tag)
             tags[decoded] = value
-    except Exception: # pylint: disable=broad-exception-caught:
+    except Exception:  # pylint: disable=broad-exception-caught:
         pass
     return tags

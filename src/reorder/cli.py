@@ -7,6 +7,8 @@ from typing import Dict, Tuple
 import click
 from click import UsageError
 
+from reorder.image import find_images
+
 _OFFSET_PATTERN = re.compile(r"(^)(.*)(=)([+-])([0-9][0-9])(:)([0-9][0-9])($)")
 
 
@@ -43,6 +45,16 @@ def analyze(source: str) -> None:
     Finds all images in a source directory and generates some information
     about those images, including camera models and start/end dates.
     """
+    images = find_images(source, offsets=None)
+    if not images:
+        click.secho("No images found.")
+    else:
+        total_files = len(images)
+        image_files = len([image for image in images if image.exif_date])
+        models = {model for model in [image.model for image in images if image.model]}
+        click.secho("Total files: %d" % total_files)
+        click.secho("Images found: %d" % image_files)
+        click.secho("Models found:\n%s" % "\n".join(sorted(["  - %s" % model for model in models])))
 
 
 @reorder.command()
