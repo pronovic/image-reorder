@@ -1,8 +1,31 @@
 # -*- coding: utf-8 -*-
 # vim: set ft=python ts=4 sw=4 expandtab:
-from typing import List
+import re
+from datetime import timedelta
+from typing import Dict, Tuple
 
 import click
+from click import UsageError
+
+_OFFSET_PATTERN = re.compile(r"(^)(.*)(=)([+-])([0-9][0-9])(:)([0-9][0-9])($)")
+
+
+def _parse_offsets(offsets: Tuple[str]) -> Dict[str, timedelta]:
+    """Parse offsets, returning a dict from camera model to timedelta."""
+    parsed = {}
+    for offset in offsets:
+        result = _OFFSET_PATTERN.match(offset)
+        if not result:
+            raise UsageError("Invalid offset; use format 'PowerShot A70=+06:55'")
+        model = result.group(2)
+        plus_or_minus = result.group(4)
+        hours = int(result.group(5))
+        minutes = int(result.group(7))
+        delta = timedelta(hours=hours, minutes=minutes)
+        if plus_or_minus == "-":
+            delta *= -1
+        parsed[model] = delta
+    return parsed
 
 
 @click.group(context_settings={"help_option_names": ["-h", "--help"]})
@@ -31,8 +54,9 @@ def analyze(source: str) -> None:
     "offsets",
     metavar="<offset>",
     help="Time offset like 'PowerShot A70=+06:55'",
+    multiple=True,
 )
-def go(source: str, target: str, offsets: List[str]) -> None:
+def go(source: str, target: str, offsets: Tuple[str]) -> None:
     """
     Reorder images in a source directory.
 
@@ -46,3 +70,4 @@ def go(source: str, target: str, offsets: List[str]) -> None:
     "PowerShot A70=+06:55".  The `reorder analyze` command will show you
     all of the different camera models among your images.
     """
+    parsed = _parse_offsets(offsets)

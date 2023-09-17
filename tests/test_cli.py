@@ -69,6 +69,15 @@ class TestGo:
         result = invoke(["go", "source", "target"])
         assert result.exit_code == 0
 
-    def test_valid_offset(self):
+    def test_valid_offset_one(self):
         result = invoke(["go", "--offset", "PowerShot A70=+06:55", "source", "target"])
         assert result.exit_code == 0
+
+    def test_valid_offset_multiple(self):
+        result = invoke(["go", "--offset", "a=+00:00", "-o", "b=-00:00", "source", "target"])
+        assert result.exit_code == 0
+
+    def test_invalid_offset(self):
+        result = invoke(["go", "--offset", "bogus", "source", "target"])
+        assert result.exit_code == 2
+        assert "Invalid offset" in result.output
