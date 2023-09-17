@@ -12,7 +12,6 @@ include = [
    { path = 'NOTICE', format = 'sdist' },
    { path = 'LICENSE', format = 'sdist' },
    { path = 'README.md', format = 'sdist' },
-   { path = 'docs', format = 'sdist' },
    { path = 'tests', format = 'sdist' },
 ]
 packages = [ 
