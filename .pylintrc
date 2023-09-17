@@ -356,6 +356,7 @@ good-names=e,
            r,
            id,
            fp,
+           go,
            _
 
 # Include a hint for the correct naming format with invalid-name.
