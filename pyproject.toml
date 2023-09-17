@@ -21,7 +21,11 @@ packages = [
 classifiers=[
    "Programming Language :: Python :: 3",
    "License :: OSI Approved :: Apache Software License",
-   "Development Status :: 4 - Beta",
+   "Operating System :: Unix",
+   "Environment :: Console",
+   "Intended Audience :: Developers",
+   "Natural Language :: English",
+   "Topic :: Multimedia :: Graphics",
 ]
 
 # Published version is managed using Git tags
