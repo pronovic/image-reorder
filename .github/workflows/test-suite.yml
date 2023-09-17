@@ -52,4 +52,4 @@ jobs:
     with:
       python-version: "3.11"
       poetry-version: "1.5.1"
-      publish-pypi: false
+      publish-pypi: true
