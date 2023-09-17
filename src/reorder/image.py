@@ -1,15 +1,20 @@
 # -*- coding: utf-8 -*-
 # vim: set ft=python ts=4 sw=4 expandtab:
+import math
+import os
 import pathlib
-from datetime import datetime, timedelta
+import shutil
+from datetime import MINYEAR, datetime, timedelta
 from typing import Any, Dict, List, Optional
 
+import click
 from PIL import Image
 from PIL.ExifTags import TAGS
 
 from reorder.interface import ImageData
 
-_PREFIX = "image"
+_IMAGE_PREFIX = "image"
+_MIN_DATE = datetime(MINYEAR, 1, 1).isoformat()
 
 
 def find_images(source: str, offsets: Optional[Dict[str, timedelta]] = None) -> List[ImageData]:
@@ -20,6 +25,24 @@ def find_images(source: str, offsets: Optional[Dict[str, timedelta]] = None) -> 
             image = _get_image_data(path, offsets)
             images.append(image)
     return images
+
+
+def copy_images(source: str, target: str, offsets: Optional[Dict[str, timedelta]] = None) -> int:
+    """Copy images from a source dir to a target dir, ordered by EXIF date and then source path."""
+    if not os.path.exists(target):
+        os.makedirs(target)
+    images = find_images(source, offsets)
+    images.sort(key=lambda x: "%s|%s" % (x.exif_date.isoformat() if x.exif_date else _MIN_DATE, x.path))
+    digits = int(math.ceil(math.log(len(images) + 1, 10)))  # number of digits required to represent all images in list
+    index = 0
+    with click.progressbar(images, label="Copying files") as entries:
+        for image in entries:
+            index += 1
+            sourcefile = str(image.path)
+            prepend = _IMAGE_PREFIX + "{0:0{digits}}__".format(index, digits=digits)
+            targetfile = os.path.join(target, prepend + os.path.basename(sourcefile))
+            shutil.copyfile(sourcefile, targetfile)
+    return index
 
 
 def _get_image_data(path: pathlib.Path, offsets: Optional[Dict[str, timedelta]]) -> ImageData:

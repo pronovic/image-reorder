@@ -1,3 +1,6 @@
 Changelog
 docs/Makefile
 docs/make.bat
+tests/fixtures/samples/panasonic.jpg
+tests/fixtures/samples/pixel2.jpg
+tests/fixtures/samples/pixel5a.jpg

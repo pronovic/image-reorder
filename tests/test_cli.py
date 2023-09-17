@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim: set ft=python ts=4 sw=4 expandtab:
 import os
+from datetime import timedelta
 from typing import List
 from unittest.mock import patch
 
@@ -95,36 +96,53 @@ Models found:
         )
 
 
-class TestGo:
+class TestCopy:
     def test_h(self):
-        result = invoke(["go", "-h"])
+        result = invoke(["copy", "-h"])
         assert result.exit_code == 0
 
     def test_help(self):
-        result = invoke(["go", "--help"])
+        result = invoke(["copy", "--help"])
         assert result.exit_code == 0
 
     def test_missing_source(self):
-        result = invoke(["go"])
+        result = invoke(["copy"])
         assert result.exit_code == 2
 
     def test_missing_target(self):
-        result = invoke(["go", "source"])
+        result = invoke(["copy", "source"])
         assert result.exit_code == 2
-
-    def test_valid(self):
-        result = invoke(["go", "source", "target"])
-        assert result.exit_code == 0
-
-    def test_valid_offset_one(self):
-        result = invoke(["go", "--offset", "PowerShot A70=+06:55", "source", "target"])
-        assert result.exit_code == 0
-
-    def test_valid_offset_multiple(self):
-        result = invoke(["go", "--offset", "a=+00:00", "-o", "b=-00:00", "source", "target"])
-        assert result.exit_code == 0
 
     def test_invalid_offset(self):
-        result = invoke(["go", "--offset", "bogus", "source", "target"])
+        result = invoke(["copy", "--offset", "bogus", "source", "target"])
         assert result.exit_code == 2
         assert "Invalid offset" in result.output
+
+    @patch("reorder.cli.copy_images")
+    def test_valid(self, copy_images):
+        result = invoke(["copy", "source", "target"])
+        assert result.exit_code == 0
+        copy_images.assert_called_once_with("source", "target", offsets={})
+
+    @patch("reorder.cli.copy_images")
+    def test_valid_offset_one(self, copy_images):
+        result = invoke(["copy", "--offset", "PowerShot A70=+06:55", "source", "target"])
+        assert result.exit_code == 0
+        copy_images.assert_called_once_with(
+            "source",
+            "target",
+            offsets={"PowerShot A70": timedelta(hours=6, minutes=55)},
+        )
+
+    @patch("reorder.cli.copy_images")
+    def test_valid_offset_multiple(self, copy_images):
+        result = invoke(["copy", "--offset", "a=+06:55", "-o", "b=-00:03", "source", "target"])
+        assert result.exit_code == 0
+        copy_images.assert_called_once_with(
+            "source",
+            "target",
+            offsets={
+                "a": timedelta(hours=6, minutes=55),
+                "b": timedelta(minutes=-3),
+            },
+        )

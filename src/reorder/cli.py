@@ -7,7 +7,7 @@ from typing import Dict, Tuple
 import click
 from click import UsageError
 
-from reorder.image import find_images
+from reorder.image import copy_images, find_images
 
 _OFFSET_PATTERN = re.compile(r"(^)(.*)(=)([+-])([0-9][0-9])(:)([0-9][0-9])($)")
 
@@ -33,7 +33,12 @@ def _parse_offsets(offsets: Tuple[str]) -> Dict[str, timedelta]:
 @click.group(context_settings={"help_option_names": ["-h", "--help"]})
 @click.version_option(package_name="image-reorder", prog_name="reorder")
 def reorder() -> None:
-    """Reorder images from multiple cameras."""
+    """
+    Reorder images from multiple cameras.
+
+    The copied filenames will get a prefix like "image001__".  This way, you can
+    sort the images by filename, and they'll have the correct order.
+    """
 
 
 @reorder.command()
@@ -43,7 +48,7 @@ def analyze(source: str) -> None:
     Analyze images in a source directory.
 
     Finds all images in a source directory and generates some information
-    about those images, including camera models and start/end dates.
+    about those images, including camera models.
     """
     images = find_images(source, offsets=None)
     images.sort(key=lambda x: x.path)
@@ -69,19 +74,23 @@ def analyze(source: str) -> None:
     help="Time offset like 'PowerShot A70=+06:55'",
     multiple=True,
 )
-def go(source: str, target: str, offsets: Tuple[str]) -> None:
+def copy(source: str, target: str, offsets: Tuple[str]) -> None:
     """
-    Reorder images in a source directory.
+    Reorder images from a source directory into a target directory.
 
     Finds all images in a source directory and reorders them into a target
-    directory by EXIF creation date.  The target folder will be created if
-    it does not already exist.
+    directory by EXIF creation date, taking into account any offsets.  The
+    target folder will be created if it does not already exist.
 
-    If the clocks on the cameras are not in sync, you may optionally
-    provide a time offset by camera model.  The configured hours and
-    minutes will be added to the the actual EXIF time. Use a format like
-    "PowerShot A70=+06:55".  The `reorder analyze` command will show you
-    all of the different camera models among your images.
+    The copied filenames will get a prefix like "image001__".  This way, you can
+    sort the images by filename, and they'll have the correct order.
+
+    If the clocks on the cameras are not in sync, you may optionally provide a
+    time offset by camera model.  The configured hours and minutes will be added
+    to or removed from the the actual EXIF time.  Use a format like "PowerShot
+    A70=+06:55" or "Pixel 2=-00:03".  The `reorder analyze` command will show
+    you all of the different camera models among your images.  You can provide
+    the --offset switch multiple times.
     """
     parsed = _parse_offsets(offsets)
-    images = find_images(source, offsets=parsed)
+    copy_images(source, target, offsets=parsed)
