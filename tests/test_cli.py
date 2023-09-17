@@ -7,6 +7,9 @@ from unittest.mock import patch
 from click.testing import CliRunner, Result
 
 from reorder.cli import reorder as command
+from reorder.interface import ImageData
+
+from .testutils import exifdate, imagepath
 
 IMAGE_DIR = os.path.join(os.path.dirname(__file__), "fixtures", "samples")
 
@@ -49,23 +52,45 @@ class TestAnalyze:
         result = invoke(["analyze"])
         assert result.exit_code == 2
 
-    def test_empty_source(self, tmpdir):
-        source = str(tmpdir.mkdir("empty"))
-        result = invoke(["analyze", source])
+    @patch("reorder.cli.find_images")
+    def test_empty_source(self, find_images):
+        find_images.return_value = []
+        result = invoke(["analyze", "source"])
         assert result.exit_code == 0
         assert result.output == "No images found.\n"
 
-    def test_valid_source(self):
-        result = invoke(["analyze", IMAGE_DIR])
+    @patch("reorder.cli.find_images")
+    def test_source_no_images(self, find_images):
+        find_images.return_value = [
+            ImageData(path=imagepath("movie.mp4"), model=None, exif_date=None),
+        ]
+        result = invoke(["analyze", "source"])
+        assert result.exit_code == 0
+        assert (
+            result.output
+            == """Total files: 1
+Images found: 0
+Models found:
+
+"""
+        )
+
+    @patch("reorder.cli.find_images")
+    def test_source_with_images(self, find_images):
+        find_images.return_value = [
+            ImageData(path=imagepath("movie.mp4"), model=None, exif_date=None),
+            ImageData(path=imagepath("panasonic.jpg"), model="DMC-TS6", exif_date=exifdate("2023-09-08T20:25:14")),
+            ImageData(path=imagepath("pixel2.jpg"), model="Pixel 2", exif_date=exifdate("2023-09-07T15:45:12")),
+        ]
+        result = invoke(["analyze", "source"])
         assert result.exit_code == 0
         assert (
             result.output
             == """Total files: 3
-Images found: 3
+Images found: 2
 Models found:
   - DMC-TS6
   - Pixel 2
-  - Pixel 5a
 """
         )
 

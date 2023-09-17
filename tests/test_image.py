@@ -1,21 +1,11 @@
 # -*- coding: utf-8 -*-
 # vim: set ft=python ts=4 sw=4 expandtab:
-import os
-import pathlib
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from reorder.image import find_images
 from reorder.interface import ImageData
 
-IMAGE_DIR = os.path.join(os.path.dirname(__file__), "fixtures", "samples")
-
-
-def imagepath(value: str) -> pathlib.Path:
-    return pathlib.Path(os.path.join(IMAGE_DIR, value))
-
-
-def exifdate(value: str) -> datetime:
-    return datetime.fromisoformat(value)
+from .testutils import IMAGE_DIR, exifdate, imagepath
 
 
 class TestImage:
