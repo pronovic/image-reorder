@@ -26,7 +26,7 @@ class TestImage:
             ImageData(path=imagepath("pixel5a.jpg"), model="Pixel 5a", exif_date=exifdate("2023-09-03T09:36:43")),
         ]
         images = find_images(IMAGE_DIR)
-        assert images == expected
+        assert sorted(images, key=lambda x: x.path) == expected
 
     def test_find_images_with_offset(self):
         expected = [
@@ -36,4 +36,4 @@ class TestImage:
         ]
         offsets = {"Pixel 2": timedelta(minutes=3)}
         images = find_images(IMAGE_DIR, offsets=offsets)
-        assert images == expected
+        assert sorted(images, key=lambda x: x.path) == expected

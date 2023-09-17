@@ -9,6 +9,8 @@ from PIL.ExifTags import TAGS
 
 from reorder.interface import ImageData
 
+_PREFIX = "image"
+
 
 def find_images(source: str, offsets: Optional[Dict[str, timedelta]] = None) -> List[ImageData]:
     """Recurses through a source directory, building a list of images in it."""
@@ -17,7 +19,7 @@ def find_images(source: str, offsets: Optional[Dict[str, timedelta]] = None) -> 
         if path.is_file():
             image = _get_image_data(path, offsets)
             images.append(image)
-    return sorted(images, key=lambda x: x.path)
+    return images
 
 
 def _get_image_data(path: pathlib.Path, offsets: Optional[Dict[str, timedelta]]) -> ImageData:

@@ -49,6 +49,12 @@ class TestAnalyze:
         result = invoke(["analyze"])
         assert result.exit_code == 2
 
+    def test_empty_source(self, tmpdir):
+        source = str(tmpdir.mkdir("empty"))
+        result = invoke(["analyze", source])
+        assert result.exit_code == 0
+        assert result.output == "No images found.\n"
+
     def test_valid_source(self):
         result = invoke(["analyze", IMAGE_DIR])
         assert result.exit_code == 0
