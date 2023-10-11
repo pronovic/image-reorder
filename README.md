@@ -6,6 +6,7 @@
 [![python](https://img.shields.io/pypi/pyversions/image-reorder.svg)](https://pypi.org/project/image-reorder/)
 [![Test Suite](https://github.com/pronovic/image-reorder/workflows/Test%20Suite/badge.svg)](https://github.com/image-reorder/actions?query=workflow%3A%22Test+Suite%22)
 [![coverage](https://coveralls.io/repos/github/image-reorder/badge.svg?branch=master)](https://coveralls.io/github/pronovic/image-reorder?branch=master)
+[![Poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json)](https://python-poetry.org/)
 
 Reorder images from multiple cameras into a single folder.
 
