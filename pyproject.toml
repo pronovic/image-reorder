@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "image-reorder"
-version = "0.0.0" # published version is managed using Git tags (see below)
+version = "0.2.4+9.b91d806" # published version is managed using Git tags (see below)
 description = "Reorder images from multiple cameras into a single folder"
 authors = ["Kenneth J. Pronovici <pronovic@ieee.org>"]
 license = "Apache-2.0"
@@ -40,16 +40,16 @@ reorder = "reorder.cli:reorder"
 
 [tool.poetry.dependencies]
 python = ">=3.11,<4"
-pillow = "^10.0.1"
+pillow = "^11.0.0"
 click = "^8.1.7"
-attrs = "^23.1.0"
+attrs = "^24.2.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.2"
 pytest-testdox = "^3.1.0"
 coverage = "^7.4.4"
 pylint = "^3.0.1"
-pre-commit = "^3.4.0"
+pre-commit = "^4.0.1"
 black = "^24.2.0"
 mypy = "^1.6.0"
 isort = "^5.12.0"
@@ -58,7 +58,7 @@ types-pillow = "^10.0.0.3"
 
 [tool.black]
 line-length = 132
-target-version = [ 'py311', 'py312' ]
+target-version = [ 'py311', 'py312', 'py313' ]
 include = '(src\/scripts\/.*$|\.pyi?$)'
 exclude = '''
 /(
