@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "image-reorder"
-version = "0.2.4+9.b91d806" # published version is managed using Git tags (see below)
+version = "0.0.0" # published version is managed using Git tags (see below)
 description = "Reorder images from multiple cameras into a single folder"
 authors = ["Kenneth J. Pronovici <pronovic@ieee.org>"]
 license = "Apache-2.0"
