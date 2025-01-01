@@ -6,4 +6,4 @@ This repository uses [Semantic Versioning](https://semver.org/).  The latest MAJ
 
 ## Reporting a Vulnerability
 
-To report a security issue, please use the GitHub Security Advisory ["Report a Vulnerability"](https://github.com/image-reorder/apologies/security/advisories/new) tab.
+To report a security issue, please use the GitHub Security Advisory ["Report a Vulnerability"](https://github.com/pronovic/image-reorder/security/advisories/new) tab.
