@@ -3,6 +3,7 @@ Version 0.2.7     unreleased
 	* Migrate to Poetry v2 and project-managed Poetry plugins.
 	* Move configuration into pyproject.toml for pytest, mypy & coverage.
 	* Fix resource not closed bug exposed by pytest warnings->errors config.
+	* Update all dependencies and outdated constraints.
 
 Version 0.2.6     02 Jan 2025
 
