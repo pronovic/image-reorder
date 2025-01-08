@@ -1,60 +1,68 @@
+[build-system]
+requires = ["poetry-core (>=2.0.0)", "poetry-dynamic-versioning (>=1.5.0,<2.0.0)"]
+build-backend = "poetry_dynamic_versioning.backend"
+
 [tool.poetry]
-name = "image-reorder"
-version = "0.0.0" # published version is managed using Git tags (see below)
-description = "Reorder images from multiple cameras into a single folder"
-authors = ["Kenneth J. Pronovici <pronovic@ieee.org>"]
-license = "Apache-2.0"
-readme = "PyPI.md"
-homepage = "https://pypi.org/project/image-reorder/"
-repository = "https://github.com/pronovic/image-reorder"
+requires-poetry = ">=2.0.0"
+packages = [ { include="reorder", from="src" } ]
 include = [
-   { path = 'Changelog', format = 'sdist' },
-   { path = 'NOTICE', format = 'sdist' },
-   { path = 'LICENSE', format = 'sdist' },
-   { path = 'README.md', format = 'sdist' },
-   { path = 'tests', format = 'sdist' },
+   { path='Changelog', format='sdist' },
+   { path='NOTICE', format='sdist' },
+   { path='LICENSE', format='sdist' },
+   { path='README.md', format='sdist' },
+   { path='tests', format='sdist' },
 ]
-packages = [ 
-   { include = "reorder", from = "src" },
-]
-classifiers=[
-   "Programming Language :: Python :: 3",
-   "License :: OSI Approved :: Apache Software License",
+classifiers = [
    "Operating System :: Unix",
    "Environment :: Console",
    "Intended Audience :: Developers",
    "Natural Language :: English",
    "Topic :: Multimedia :: Graphics",
 ]
+version = "0.0.0"  # published version is managed using Git tags (see below)
+
+[tool.poetry.requires-plugins]
+poetry-dynamic-versioning = { version=">=1.5.0,<2.0.0", extras=["plugin"] }
 
 # Published version is managed using Git tags
 # We get either the tag (like "0.24.1") or a snapshot-type version (like "0.24.1+3.e8319c4")
-# If the plugin is not installed, then the version is always "0.0.0", taken from above
 [tool.poetry-dynamic-versioning]
 enable = true
 pattern = '^[vV](?P<base>\d+\.\d+\.\d+)'  # this extracts the version from our vX.Y.Z tag format
 format-jinja = "{% if distance == 0 and not dirty %}{{ base }}{% else %}{{ base }}+{{ distance }}.{{ commit }}{% endif %}"
 
-[tool.poetry.scripts]
-reorder = "reorder.cli:reorder"
+[project]
+name = "image-reorder"
+requires-python = ">=3.11,<4"
+description = "Reorder images from multiple cameras into a single folder"
+authors = [ { name="Kenneth J. Pronovici", email="pronovic@ieee.org" } ]
+license = "Apache-2.0"
+readme = "PyPI.md"
+dynamic = [ "classifiers", "version" ]
+dependencies = [
+   "pillow (>=11.0.0,<12.0.0)",
+   "click (>=8.1.7,<9.0.0)",
+   "attrs (>=24.2.0,<25.0.0)",
+]
 
-[tool.poetry.dependencies]
-python = ">=3.11,<4"
-pillow = "^11.0.0"
-click = "^8.1.7"
-attrs = "^24.2.0"
+[project.urls]
+homepage = "https://pypi.org/project/image-reorder/"
+repository = "https://github.com/pronovic/image-reorder"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^8.0.2"
-pytest-testdox = "^3.1.0"
-coverage = "^7.4.4"
-pylint = "^3.0.1"
-pre-commit = "^4.0.1"
-black = "^24.2.0"
-mypy = "^1.6.0"
-isort = "^5.12.0"
-colorama = "~0, >=0.4.6"
-types-pillow = "^10.0.0.3"
+pytest = ">=8.0.2,<9.0.0"
+pytest-testdox = ">=3.1.0,<4.0.0"
+coverage = ">=7.4.4,<8.0.0"
+pylint = ">=3.0.1,<4.0.0"
+pre-commit = ">=4.0.1,<5.0.0"
+black = ">=24.2.0,<25.0.0"
+mypy = ">=1.6.0,<2.0.0"
+isort = ">=5.12.0,<6.0.0"
+colorama = ">=0.4.6,<1.0.0"
+types-pillow = ">=10.0.0.3,<11.0.0.0"
+
+[tool.poetry.scripts]
+reorder = "reorder.cli:reorder"
 
 [tool.black]
 line-length = 132
@@ -129,7 +137,3 @@ allow_untyped_defs = true
 [[tool.mypy.overrides]]
 module = "pytest"
 ignore_missing_imports = true
-
-[build-system]
-requires = ["poetry>=1.0.0", "poetry-dynamic-versioning"]
-build-backend = "poetry_dynamic_versioning.backend"
