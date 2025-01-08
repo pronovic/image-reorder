@@ -66,10 +66,10 @@ def _get_exif_tags(path: pathlib.Path) -> Dict[str | int, Any]:
     # See: https://stackoverflow.com/questions/4764932/in-python-how-do-i-read-the-exif-data-for-an-image
     tags = {}
     try:
-        info = Image.open(path).getexif()
-        for tag, value in info.items():
-            decoded = TAGS.get(tag, tag)
-            tags[decoded] = value
+        with Image.open(path) as image:
+            for tag, value in image.getexif().items():
+                decoded = TAGS.get(tag, tag)
+                tags[decoded] = value
     except Exception:  # pylint: disable=broad-exception-caught:
         pass
     return tags
