@@ -9,8 +9,7 @@ from click.testing import CliRunner, Result
 
 from reorder.cli import reorder as command
 from reorder.interface import ImageData
-
-from .testutils import exifdate, imagepath
+from tests.testutils import exifdate, imagepath
 
 IMAGE_DIR = os.path.join(os.path.dirname(__file__), "fixtures", "samples")
 

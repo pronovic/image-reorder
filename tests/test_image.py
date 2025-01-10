@@ -5,8 +5,7 @@ from datetime import timedelta
 
 from reorder.image import copy_images, find_images
 from reorder.interface import ImageData
-
-from .testutils import IMAGE_DIR, exifdate, imagepath
+from tests.testutils import IMAGE_DIR, exifdate, imagepath
 
 
 class TestFindImages:

@@ -3,6 +3,7 @@ Version 0.2.8     unreleased
 	* Pull in latest version of run-script-framework.
 	* Upgrade to poetry-dynamic-versioning v1.5.2 for minor fixes.
 	* Add .python-version in preferred order to support pyenv.
+	* Fix problem with relative test imports using Pycharm on Linux.
 
 Version 0.2.7     08 Jan 2025
 
