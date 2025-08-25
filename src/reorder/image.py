@@ -51,8 +51,8 @@ def _get_image_data(path: pathlib.Path, offsets: Optional[Dict[str, timedelta]])
     # In the meantime, the EXIF implementation in Pillow has changed, and it takes more effort
     # to get at DateTimeOriginal.  For now, I'm going to look at only DateTime.
     tags = _get_exif_tags(path)
-    model = tags["Model"] if "Model" in tags else None
-    date_time = tags["DateTime"] if "DateTime" in tags else None
+    model = tags.get("Model", None)
+    date_time = tags.get("DateTime", None)
     exif_date = None
     if date_time:
         exif_date = datetime.strptime(date_time, "%Y:%m:%d %H:%M:%S")
