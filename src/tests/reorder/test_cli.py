@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
 # vim: set ft=python ts=4 sw=4 expandtab:
 import os
 from datetime import timedelta
-from typing import List
 from unittest.mock import patch
 
 from click.testing import CliRunner, Result
@@ -14,7 +12,7 @@ from tests.reorder.testutils import exifdate, imagepath
 IMAGE_DIR = os.path.join(os.path.dirname(__file__), "fixtures", "samples")
 
 
-def invoke(args: List[str]) -> Result:
+def invoke(args: list[str]) -> Result:
     return CliRunner().invoke(command, args)
 
 

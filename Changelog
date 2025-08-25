@@ -8,6 +8,7 @@ Version 0.2.8     unreleased
 	* Move unit tests from `tests` into `src/tests/reorder`.
 	* Update the MyPy configuration so we're using latest rules.
 	* Replace black, isort, and pylint with the Ruff formatter and linter.
+	* Address Ruff linter warnings and modernize the code to 2025 standards.
 
 Version 0.2.7     08 Jan 2025
 
