@@ -54,7 +54,7 @@ def _get_image_data(path: pathlib.Path, offsets: dict[str, timedelta] | None) ->
     date_time = tags.get("DateTime", None)
     exif_date = None
     if date_time:
-        exif_date = datetime.strptime(date_time, "%Y:%m:%d %H:%M:%S")
+        exif_date = datetime.strptime(date_time, "%Y:%m:%d %H:%M:%S")  # noqa: DTZ007
         if offsets and model in offsets:
             exif_date += offsets[model]
     return ImageData(path=path, model=model, exif_date=exif_date)
