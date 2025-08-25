@@ -2,7 +2,6 @@
 # vim: set ft=python ts=4 sw=4 expandtab:
 import re
 from datetime import timedelta
-from typing import Dict, Tuple
 
 import click
 from click import UsageError
@@ -12,7 +11,7 @@ from reorder.image import copy_images, find_images
 _OFFSET_PATTERN = re.compile(r"(^)(.*)(=)([+-])([0-9][0-9])(:)([0-9][0-9])($)")
 
 
-def _parse_offsets(offsets: Tuple[str]) -> Dict[str, timedelta]:
+def _parse_offsets(offsets: tuple[str]) -> dict[str, timedelta]:
     """Parse offsets, returning a dict from camera model to timedelta."""
     parsed = {}
     for offset in offsets:
@@ -74,7 +73,7 @@ def analyze(source: str) -> None:
     help="Time offset like 'PowerShot A70=+06:55'",
     multiple=True,
 )
-def copy(source: str, target: str, offsets: Tuple[str]) -> None:
+def copy(source: str, target: str, offsets: tuple[str]) -> None:
     """
     Reorder images from a source directory into a target directory.
 

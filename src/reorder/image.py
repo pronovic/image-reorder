@@ -5,7 +5,7 @@ import os
 import pathlib
 import shutil
 from datetime import MINYEAR, datetime, timedelta
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 
 import click
 from PIL import Image
@@ -17,7 +17,7 @@ _IMAGE_PREFIX = "image"
 _MIN_DATE = datetime(MINYEAR, 1, 1).isoformat()
 
 
-def find_images(source: str, offsets: Optional[Dict[str, timedelta]] = None) -> List[ImageData]:
+def find_images(source: str, offsets: Optional[dict[str, timedelta]] = None) -> list[ImageData]:
     """Recurses through a source directory, building a list of images in it."""
     images = []
     for path in pathlib.Path(source).rglob("*"):
@@ -27,7 +27,7 @@ def find_images(source: str, offsets: Optional[Dict[str, timedelta]] = None) -> 
     return images
 
 
-def copy_images(source: str, target: str, offsets: Optional[Dict[str, timedelta]] = None) -> int:
+def copy_images(source: str, target: str, offsets: Optional[dict[str, timedelta]] = None) -> int:
     """Copy images from a source dir to a target dir, ordered by EXIF date and then source path."""
     if not os.path.exists(target):
         os.makedirs(target)
@@ -45,7 +45,7 @@ def copy_images(source: str, target: str, offsets: Optional[Dict[str, timedelta]
     return index
 
 
-def _get_image_data(path: pathlib.Path, offsets: Optional[Dict[str, timedelta]]) -> ImageData:
+def _get_image_data(path: pathlib.Path, offsets: Optional[dict[str, timedelta]]) -> ImageData:
     """Get the image data for a file, applying offsets as necessary."""
     # In the original Python 2 implementation, I looked at both DateTime and DateTimeOriginal.
     # In the meantime, the EXIF implementation in Pillow has changed, and it takes more effort
@@ -61,7 +61,7 @@ def _get_image_data(path: pathlib.Path, offsets: Optional[Dict[str, timedelta]])
     return ImageData(path=path, model=model, exif_date=exif_date)
 
 
-def _get_exif_tags(path: pathlib.Path) -> Dict[str | int, Any]:
+def _get_exif_tags(path: pathlib.Path) -> dict[str | int, Any]:
     """Get the EXIF tags associated with an image on disk."""
     # See: https://stackoverflow.com/questions/4764932/in-python-how-do-i-read-the-exif-data-for-an-image
     tags = {}
