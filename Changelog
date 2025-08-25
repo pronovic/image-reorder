@@ -5,6 +5,7 @@ Version 0.2.8     unreleased
 	* Fix problem with relative test imports using Pycharm on Linux.
 	* Adjust GHA build process to allow builds for stacked PRs.
 	* Add a new `run clean` target to clean up generated data.
+	* Move unit tests from `tests` into `src/tests/reorder`.
 
 Version 0.2.7     08 Jan 2025
 
