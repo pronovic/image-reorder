@@ -70,6 +70,6 @@ def _get_exif_tags(path: pathlib.Path) -> Dict[str | int, Any]:
             for tag, value in image.getexif().items():
                 decoded = TAGS.get(tag, tag)
                 tags[decoded] = value
-    except Exception:
+    except Exception:  # noqa: BLE001
         pass
     return tags
