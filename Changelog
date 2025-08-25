@@ -7,6 +7,7 @@ Version 0.2.8     unreleased
 	* Add a new `run clean` target to clean up generated data.
 	* Move unit tests from `tests` into `src/tests/reorder`.
 	* Update the MyPy configuration so we're using latest rules.
+	* Replace black and isort tools with the Ruff formatter.
 
 Version 0.2.7     08 Jan 2025
 
