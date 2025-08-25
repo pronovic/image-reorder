@@ -33,7 +33,7 @@ def copy_images(source: str, target: str, offsets: Optional[Dict[str, timedelta]
         os.makedirs(target)
     images = find_images(source, offsets)
     images.sort(key=lambda x: "%s|%s" % (x.exif_date.isoformat() if x.exif_date else _MIN_DATE, x.path))
-    digits = int(math.ceil(math.log10(len(images) + 1)))  # number of digits required to represent all images in list
+    digits = math.ceil(math.log10(len(images) + 1))  # number of digits required to represent all images in list
     index = 0
     with click.progressbar(images, label="Copying files") as entries:
         for image in entries:

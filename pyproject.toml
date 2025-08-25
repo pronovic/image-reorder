@@ -158,7 +158,6 @@ ignore = [
   # Exclusions of specific rules that we want to work toward being compliant with
   "DTZ001",
   "DTZ007", 
-  "RUF046",
   "S110", 
   "SIM401",
   "UP006",
