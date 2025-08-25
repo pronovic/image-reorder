@@ -56,9 +56,9 @@ def analyze(source: str) -> None:
         total_files = len(images)
         image_files = len([image for image in images if image.exif_date])
         models = {image.model for image in images if image.model}
-        click.secho("Total files: %d" % total_files)
-        click.secho("Images found: %d" % image_files)
-        click.secho("Models found:\n%s" % "\n".join(sorted(["  - %s" % model for model in models])))
+        click.secho(f"Total files: {total_files}")
+        click.secho(f"Images found: {image_files}")
+        click.secho("Models found:\n{}".format("\n".join(sorted([f"  - {model}" for model in models]))))
 
 
 @reorder.command()
