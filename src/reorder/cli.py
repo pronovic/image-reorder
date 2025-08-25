@@ -57,7 +57,7 @@ def analyze(source: str) -> None:
     else:
         total_files = len(images)
         image_files = len([image for image in images if image.exif_date])
-        models = set([image.model for image in images if image.model])  # pylint: disable=consider-using-set-comprehension:
+        models = set([image.model for image in images if image.model])
         click.secho("Total files: %d" % total_files)
         click.secho("Images found: %d" % image_files)
         click.secho("Models found:\n%s" % "\n".join(sorted(["  - %s" % model for model in models])))
