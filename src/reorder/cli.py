@@ -1,4 +1,6 @@
 # vim: set ft=python ts=4 sw=4 expandtab:
+# ruff: noqa: UP031  # allow format specifiers rather than f-strings
+
 import re
 from datetime import timedelta
 
@@ -56,9 +58,9 @@ def analyze(source: str) -> None:
         total_files = len(images)
         image_files = len([image for image in images if image.exif_date])
         models = {image.model for image in images if image.model}
-        click.secho(f"Total files: {total_files}")
-        click.secho(f"Images found: {image_files}")
-        click.secho("Models found:\n{}".format("\n".join(sorted([f"  - {model}" for model in models]))))
+        click.secho("Total files: %d" % total_files)
+        click.secho("Images found: %d" % image_files)
+        click.secho("Models found:\n%s" % "\n".join(sorted(["  - %s" % model for model in models])))
 
 
 @reorder.command()
