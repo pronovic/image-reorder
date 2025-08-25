@@ -13,7 +13,7 @@ from PIL.ExifTags import TAGS
 from reorder.interface import ImageData
 
 _IMAGE_PREFIX = "image"
-_MIN_DATE = datetime(MINYEAR, 1, 1).isoformat()
+_MIN_DATE = datetime(MINYEAR, 1, 1).isoformat()  # noqa: DTZ001
 
 
 def find_images(source: str, offsets: dict[str, timedelta] | None = None) -> list[ImageData]:
