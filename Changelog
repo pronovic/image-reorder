@@ -1,9 +1,10 @@
 Version 0.2.8     unreleased
 
-	* Adjust GHA build process to allow builds for stacked PRs.
 	* Upgrade to poetry-dynamic-versioning v1.5.2 for minor fixes.
 	* Add .python-version in preferred order to support pyenv.
 	* Fix problem with relative test imports using Pycharm on Linux.
+	* Adjust GHA build process to allow builds for stacked PRs.
+	* Add a new `run clean` target to clean up generated data.
 
 Version 0.2.7     08 Jan 2025
 
