@@ -20,10 +20,12 @@ class TestCommon:
     def test_h(self):
         result = invoke(["-h"])
         assert result.exit_code == 0
+        assert result.output.startswith("Usage: reorder [OPTIONS]")
 
     def test_help(self):
         result = invoke(["--help"])
         assert result.exit_code == 0
+        assert result.output.startswith("Usage: reorder [OPTIONS]")
 
     @patch("importlib.metadata.version")  # this is used underneath by @click.version_option()
     def test_version(self, version):
@@ -34,21 +36,25 @@ class TestCommon:
 
     def test_no_args(self):
         result = invoke([])
-        assert result.exit_code == 0
+        assert result.exit_code == 2
+        assert result.output.startswith("Usage: reorder [OPTIONS]")
 
 
 class TestAnalyze:
     def test_h(self):
         result = invoke(["analyze", "-h"])
         assert result.exit_code == 0
+        assert result.output.startswith("Usage: reorder analyze [OPTIONS]")
 
     def test_help(self):
         result = invoke(["analyze", "--help"])
         assert result.exit_code == 0
+        assert result.output.startswith("Usage: reorder analyze [OPTIONS]")
 
     def test_missing_source(self):
         result = invoke(["analyze"])
         assert result.exit_code == 2
+        assert result.output.startswith("Usage: reorder analyze [OPTIONS]")
 
     @patch("reorder.cli.find_images")
     def test_empty_source(self, find_images):
@@ -97,18 +103,22 @@ class TestCopy:
     def test_h(self):
         result = invoke(["copy", "-h"])
         assert result.exit_code == 0
+        assert result.output.startswith("Usage: reorder copy [OPTIONS]")
 
     def test_help(self):
         result = invoke(["copy", "--help"])
         assert result.exit_code == 0
+        assert result.output.startswith("Usage: reorder copy [OPTIONS]")
 
     def test_missing_source(self):
         result = invoke(["copy"])
         assert result.exit_code == 2
+        assert result.output.startswith("Usage: reorder copy [OPTIONS]")
 
     def test_missing_target(self):
         result = invoke(["copy", "source"])
         assert result.exit_code == 2
+        assert result.output.startswith("Usage: reorder copy [OPTIONS]")
 
     def test_invalid_offset(self):
         result = invoke(["copy", "--offset", "bogus", "source", "target"])

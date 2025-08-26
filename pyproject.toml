@@ -42,7 +42,7 @@ dynamic = [ "classifiers", "version" ]
 dependencies = [
    "pillow (>=11.0.0,<12.0.0)",
    "click (>=8.1.7,<9.0.0)",
-   "attrs (>=24.2.0,<25.0.0)",
+   "attrs (>=24.2.0)", # open-ended due to backwards-compatibility guarantee
 ]
 
 [project.urls]
@@ -50,6 +50,7 @@ homepage = "https://pypi.org/project/image-reorder/"
 repository = "https://github.com/pronovic/image-reorder"
 
 [tool.poetry.group.dev.dependencies]
+ruff = ">=0.12.10,<1.0.0"
 pytest = ">=8.0.2,<9.0.0"
 pytest-testdox = ">=3.1.0,<4.0.0"
 coverage = ">=7.4.4,<8.0.0"
@@ -57,7 +58,6 @@ pre-commit = ">=4.0.1,<5.0.0"
 mypy = ">=1.6.0,<2.0.0"
 colorama = ">=0.4.6,<1.0.0"
 types-pillow = ">=10.0.0.3,<11.0.0.0"
-ruff = "^0.12.10"
 
 [tool.poetry.scripts]
 reorder = "reorder.cli:reorder"
