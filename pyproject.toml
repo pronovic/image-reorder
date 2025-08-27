@@ -154,7 +154,6 @@ ignore = [
   "TRY003",     # allow long messages in exceptions; this is often a false-positive that has little benefit
 
   # Exclusions of rule categories and specific rules, customized for this repository
-  "PTH",        # flake8-use-pathlib
   "UP031",      # allow format-specifiers in addition to modern f-strings
 ]
 
