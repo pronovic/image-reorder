@@ -37,7 +37,7 @@ def copy_images(source: str, target: str, offsets: dict[str, timedelta] | None =
     with click.progressbar(images, label="Copying files") as entries:
         for index, image in enumerate(entries, start=1):
             sourcefile = str(image.path)
-            prepend = _IMAGE_PREFIX + "{0:0{digits}}__".format(index, digits=digits)
+            prepend = f"{_IMAGE_PREFIX}{index:0{digits}d}__"
             targetfile = os.path.join(target, prepend + os.path.basename(sourcefile))
             shutil.copyfile(sourcefile, targetfile)
     return index
