@@ -2,9 +2,9 @@
 
 import math
 import os
-import pathlib
 import shutil
 from datetime import MINYEAR, datetime, timedelta
+from pathlib import Path
 from typing import Any
 
 import click
@@ -20,7 +20,7 @@ _MIN_DATE = datetime(MINYEAR, 1, 1).isoformat()  # noqa: DTZ001
 def find_images(source: str, offsets: dict[str, timedelta] | None = None) -> list[ImageData]:
     """Recurses through a source directory, building a list of images in it."""
     images = []
-    for path in pathlib.Path(source).rglob("*"):
+    for path in Path(source).rglob("*"):
         if path.is_file():
             image = _get_image_data(path, offsets)
             images.append(image)
@@ -43,7 +43,7 @@ def copy_images(source: str, target: str, offsets: dict[str, timedelta] | None =
     return index
 
 
-def _get_image_data(path: pathlib.Path, offsets: dict[str, timedelta] | None) -> ImageData:
+def _get_image_data(path: Path, offsets: dict[str, timedelta] | None) -> ImageData:
     """Get the image data for a file, applying offsets as necessary."""
     # In the original Python 2 implementation, I looked at both DateTime and DateTimeOriginal.
     # In the meantime, the EXIF implementation in Pillow has changed, and it takes more effort
@@ -59,7 +59,7 @@ def _get_image_data(path: pathlib.Path, offsets: dict[str, timedelta] | None) ->
     return ImageData(path=path, model=model, exif_date=exif_date)
 
 
-def _get_exif_tags(path: pathlib.Path) -> dict[str | int, Any]:
+def _get_exif_tags(path: Path) -> dict[str | int, Any]:
     """Get the EXIF tags associated with an image on disk."""
     # See: https://stackoverflow.com/questions/4764932/in-python-how-do-i-read-the-exif-data-for-an-image
     tags = {}

@@ -1,6 +1,6 @@
 # vim: set ft=python ts=4 sw=4 expandtab:
-import pathlib
 from datetime import timedelta
+from pathlib import Path
 
 from reorder.image import copy_images, find_images
 from reorder.interface import ImageData
@@ -32,7 +32,7 @@ class TestCopyImages:
     def test_copy_images_non_existing_target(self, tmpdir):
         target = tmpdir.join("target")
         copy_images(IMAGE_DIR, str(target), offsets=None)
-        copied = sorted([path for path in pathlib.Path(target).rglob("*") if path.is_file()])
+        copied = sorted([path for path in Path(target).rglob("*") if path.is_file()])
         assert copied == [
             target.join("image1__pixel5a.jpg"),
             target.join("image2__pixel2.jpg"),
@@ -43,7 +43,7 @@ class TestCopyImages:
         tmpdir.mkdir("target")
         target = tmpdir.join("target")
         copy_images(IMAGE_DIR, str(target), offsets=None)
-        copied = sorted([path for path in pathlib.Path(target).rglob("*") if path.is_file()])
+        copied = sorted([path for path in Path(target).rglob("*") if path.is_file()])
         assert copied == [
             target.join("image1__pixel5a.jpg"),
             target.join("image2__pixel2.jpg"),
