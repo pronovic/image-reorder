@@ -29,7 +29,7 @@ def find_images(source: Path, offsets: dict[str, timedelta] | None = None) -> li
 def copy_images(source: Path, target: Path, offsets: dict[str, timedelta] | None = None) -> int:
     """Copy images from a source dir to a target dir, ordered by EXIF date and then source path."""
     images = find_images(source, offsets)
-    images.sort(key=lambda x: "%s|%s" % (x.exif_date.isoformat() if x.exif_date else _MIN_DATE, x.path))
+    images.sort(key=lambda x: f"{x.exif_date.isoformat() if x.exif_date else _MIN_DATE}|{x.path}")
     digits = math.ceil(math.log10(len(images) + 1))  # number of digits required to represent all images in list
     with click.progressbar(images, label="Copying files") as entries:
         for index, image in enumerate(entries, start=1):
