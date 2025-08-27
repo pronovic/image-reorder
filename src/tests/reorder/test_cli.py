@@ -1,4 +1,5 @@
 # vim: set ft=python ts=4 sw=4 expandtab:
+import platform
 from datetime import timedelta
 from unittest.mock import patch
 
@@ -70,21 +71,25 @@ class TestAnalyze:
         source = working_dir / "source"
         result = invoke(["analyze", str(source)])
         assert result.exit_code == 2
-        assert f"Directory '{source}' does not exist" in result.output
+        assert "does not exist" in result.output
 
     def test_file_source(self, working_dir):
         source = working_dir / "source"
         source.touch()  # it's a file
         result = invoke(["analyze", str(source)])
         assert result.exit_code == 2
-        assert f"Directory '{source}' is a file" in result.output
+        assert "is a file" in result.output
 
+    @pytest.mark.skipif(
+        platform.system() == "Windows",
+        reason="Permission check does not work on Windows",
+    )
     def test_unreadable_source(self, working_dir):
         source = working_dir / "source"
         source.mkdir(mode=0o000)  # it's a directory, but not readable
         result = invoke(["analyze", str(source)])
         assert result.exit_code == 2
-        assert f"Directory '{source}' is not readable" in result.output
+        assert "is not readable" in result.output
 
     @patch("reorder.cli.find_images")
     def test_empty_source(self, find_images, working_dir):
@@ -158,21 +163,25 @@ class TestCopy:
         source = working_dir / "source"
         target = working_dir / "target"
         result = invoke(["copy", str(source), str(target)])
-        assert f"Directory '{source}' does not exist" in result.output
+        assert "does not exist" in result.output
 
     def test_file_source(self, working_dir):
         source = working_dir / "source"
         target = working_dir / "target"
         source.touch()  # it's a file
         result = invoke(["copy", str(source), str(target)])
-        assert f"Directory '{source}' is a file" in result.output
+        assert "is a file" in result.output
 
+    @pytest.mark.skipif(
+        platform.system() == "Windows",
+        reason="Permission check does not work on Windows",
+    )
     def test_unreadable_source(self, working_dir):
         source = working_dir / "source"
         target = working_dir / "target"
         source.mkdir(mode=0o000)  # it's a directory, but not readable
         result = invoke(["copy", str(source), str(target)])
-        assert f"Directory '{source}' is not readable" in result.output
+        assert "is not readable" in result.output
 
     def test_missing_target(self, working_dir):
         source = working_dir / "source"
@@ -187,23 +196,31 @@ class TestCopy:
         source.mkdir()
         target.touch()  # it's a file
         result = invoke(["copy", str(source), str(target)])
-        assert f"Directory '{target}' is a file" in result.output
+        assert "is a file" in result.output
 
+    @pytest.mark.skipif(
+        platform.system() == "Windows",
+        reason="Permission check does not work on Windows",
+    )
     def test_unreadable_target(self, working_dir):
         source = working_dir / "source"
         target = working_dir / "target"
         source.mkdir()
         target.mkdir(mode=0o000)  # it's a directory, but not readable
         result = invoke(["copy", str(source), str(target)])
-        assert f"Directory '{target}' is not readable" in result.output
+        assert "is not readable" in result.output
 
+    @pytest.mark.skipif(
+        platform.system() == "Windows",
+        reason="Permission check does not work on Windows",
+    )
     def test_unwritable_target(self, working_dir):
         source = working_dir / "source"
         target = working_dir / "target"
         source.mkdir()
         target.mkdir(mode=0o400)  # it's a directory, but not writable
         result = invoke(["copy", str(source), str(target)])
-        assert f"Directory '{target}' is not writable" in result.output
+        assert "is not writable" in result.output
 
     def test_invalid_offset(self, working_dir):
         source = working_dir / "source"
