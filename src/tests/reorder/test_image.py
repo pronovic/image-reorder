@@ -1,6 +1,5 @@
 # vim: set ft=python ts=4 sw=4 expandtab:
 from datetime import timedelta
-from pathlib import Path
 
 from reorder.image import copy_images, find_images
 from reorder.interface import ImageData
@@ -29,23 +28,13 @@ class TestFindImages:
 
 
 class TestCopyImages:
-    def test_copy_images_non_existing_target(self, tmpdir):
-        target = tmpdir.join("target")
-        copy_images(IMAGE_DIR, str(target), offsets=None)
-        copied = sorted([path for path in Path(target).rglob("*") if path.is_file()])
+    def test_copy_images(self, tmp_path):
+        target = tmp_path / "target"
+        target.mkdir()
+        copy_images(IMAGE_DIR, target, offsets=None)
+        copied = sorted([path for path in target.rglob("*") if path.is_file()])
         assert copied == [
-            target.join("image1__pixel5a.jpg"),
-            target.join("image2__pixel2.jpg"),
-            target.join("image3__panasonic.jpg"),
-        ]
-
-    def test_copy_images_existing_target(self, tmpdir):
-        tmpdir.mkdir("target")
-        target = tmpdir.join("target")
-        copy_images(IMAGE_DIR, str(target), offsets=None)
-        copied = sorted([path for path in Path(target).rglob("*") if path.is_file()])
-        assert copied == [
-            target.join("image1__pixel5a.jpg"),
-            target.join("image2__pixel2.jpg"),
-            target.join("image3__panasonic.jpg"),
+            target / "image1__pixel5a.jpg",
+            target / "image2__pixel2.jpg",
+            target / "image3__panasonic.jpg",
         ]

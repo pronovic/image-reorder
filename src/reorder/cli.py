@@ -2,6 +2,7 @@
 
 import re
 from datetime import timedelta
+from pathlib import Path
 
 import click
 from click import UsageError
@@ -41,8 +42,18 @@ def reorder() -> None:
 
 
 @reorder.command()
-@click.argument("source", metavar="<source-dir>")
-def analyze(source: str) -> None:
+@click.argument(
+    "source",
+    metavar="<source-dir>",
+    type=click.Path(
+        exists=True,
+        file_okay=False,
+        dir_okay=True,
+        readable=True,
+        path_type=Path,
+    ),
+)
+def analyze(source: Path) -> None:
     """
     Analyze images in a source directory.
 
@@ -63,8 +74,29 @@ def analyze(source: str) -> None:
 
 
 @reorder.command()
-@click.argument("source", metavar="<source-dir>")
-@click.argument("target", metavar="<target-dir>")
+@click.argument(
+    "source",
+    metavar="<source-dir>",
+    type=click.Path(
+        exists=True,
+        file_okay=False,
+        dir_okay=True,
+        readable=True,
+        path_type=Path,
+    ),
+)
+@click.argument(
+    "target",
+    metavar="<target-dir>",
+    type=click.Path(
+        exists=False,
+        file_okay=False,
+        dir_okay=True,
+        readable=True,
+        writable=True,
+        path_type=Path,
+    ),
+)
 @click.option(
     "--offset",
     "-o",
@@ -73,7 +105,7 @@ def analyze(source: str) -> None:
     help="Time offset like 'PowerShot A70=+06:55'",
     multiple=True,
 )
-def copy(source: str, target: str, offsets: tuple[str]) -> None:
+def copy(source: Path, target: Path, offsets: tuple[str]) -> None:
     """
     Reorder images from a source directory into a target directory.
 
@@ -91,5 +123,7 @@ def copy(source: str, target: str, offsets: tuple[str]) -> None:
     you all of the different camera models among your images.  You can provide
     the --offset switch multiple times.
     """
+    if not target.is_dir():
+        target.mkdir(parents=True)
     parsed = _parse_offsets(offsets)
     copy_images(source, target, offsets=parsed)
