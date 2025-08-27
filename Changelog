@@ -1,7 +1,7 @@
 Version 0.2.8     unreleased
 
 	* Remove `__all__ = []` from __init__.py.
-	* Upgrade to poetry-dynamic-versioning v1.5.2 for minor fixes.
+	* Upgrade to poetry-dynamic-versioning v1.9.1 for minor fixes.
 	* Add .python-version in preferred order to support pyenv.
 	* Fix problem with relative test imports using Pycharm on Linux.
 	* Adjust GHA build process to allow builds for stacked PRs.
