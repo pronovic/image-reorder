@@ -34,10 +34,8 @@ def copy_images(source: str, target: str, offsets: dict[str, timedelta] | None =
     images = find_images(source, offsets)
     images.sort(key=lambda x: "%s|%s" % (x.exif_date.isoformat() if x.exif_date else _MIN_DATE, x.path))
     digits = math.ceil(math.log10(len(images) + 1))  # number of digits required to represent all images in list
-    index = 0
     with click.progressbar(images, label="Copying files") as entries:
-        for image in entries:
-            index += 1
+        for index, image in enumerate(entries, start=1):
             sourcefile = str(image.path)
             prepend = _IMAGE_PREFIX + "{0:0{digits}}__".format(index, digits=digits)
             targetfile = os.path.join(target, prepend + os.path.basename(sourcefile))
