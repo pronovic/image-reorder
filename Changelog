@@ -4,6 +4,7 @@ Version 0.2.8     unreleased
 	* Upgrade to poetry-dynamic-versioning v1.9.1 for minor fixes.
 	* Add .python-version in preferred order to support pyenv.
 	* Fix problem with relative test imports using Pycharm on Linux.
+	* Version profiles_settings.xml to control PyCharm inspection profile.
 	* Adjust GHA build process to allow builds for stacked PRs.
 	* Add a new `run clean` target to clean up generated data.
 	* Move unit tests from `tests` into `src/tests/reorder`.
