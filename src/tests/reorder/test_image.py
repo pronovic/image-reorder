@@ -9,6 +9,7 @@ from tests.reorder.testutils import IMAGE_DIR, exifdate, imagepath
 class TestFindImages:
     def test_find_images_no_offset(self):
         expected = [
+            ImageData(path=imagepath("nodate.jpg"), model="DMC-TS6", exif_date=None),
             ImageData(path=imagepath("panasonic.jpg"), model="DMC-TS6", exif_date=exifdate("2023-09-08T20:25:14")),
             ImageData(path=imagepath("pixel2.jpg"), model="Pixel 2", exif_date=exifdate("2023-09-07T15:45:12")),
             ImageData(path=imagepath("pixel5a.jpg"), model="Pixel 5a", exif_date=exifdate("2023-09-03T09:36:43")),
@@ -18,6 +19,7 @@ class TestFindImages:
 
     def test_find_images_with_offset(self):
         expected = [
+            ImageData(path=imagepath("nodate.jpg"), model="DMC-TS6", exif_date=None),
             ImageData(path=imagepath("panasonic.jpg"), model="DMC-TS6", exif_date=exifdate("2023-09-08T20:25:14")),
             ImageData(path=imagepath("pixel2.jpg"), model="Pixel 2", exif_date=exifdate("2023-09-07T15:48:12")),  # +3 minutes
             ImageData(path=imagepath("pixel5a.jpg"), model="Pixel 5a", exif_date=exifdate("2023-09-03T09:36:43")),
@@ -34,7 +36,8 @@ class TestCopyImages:
         copy_images(IMAGE_DIR, target, offsets=None)
         copied = sorted([path for path in target.rglob("*") if path.is_file()])
         assert copied == [
-            target / "image1__pixel5a.jpg",
-            target / "image2__pixel2.jpg",
-            target / "image3__panasonic.jpg",
+            target / "image1__nodate.jpg",
+            target / "image2__pixel5a.jpg",
+            target / "image3__pixel2.jpg",
+            target / "image4__panasonic.jpg",
         ]

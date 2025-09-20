@@ -14,6 +14,7 @@ from reorder.interface import ImageData
 
 _IMAGE_PREFIX = "image"
 _MIN_DATE = datetime(MINYEAR, 1, 1).isoformat()  # noqa: DTZ001
+_EMPTY_DATE = "0000:00:00 00:00:00"  # some cameras use this when no date has been set
 
 
 def find_images(source: Path, offsets: dict[str, timedelta] | None = None) -> list[ImageData]:
@@ -49,7 +50,7 @@ def _get_image_data(path: Path, offsets: dict[str, timedelta] | None) -> ImageDa
     model = tags.get("Model", None)
     date_time = tags.get("DateTime", None)
     exif_date = None
-    if date_time:
+    if date_time and date_time != _EMPTY_DATE:
         exif_date = datetime.strptime(date_time, "%Y:%m:%d %H:%M:%S")  # noqa: DTZ007
         if offsets and model in offsets:
             exif_date += offsets[model]
