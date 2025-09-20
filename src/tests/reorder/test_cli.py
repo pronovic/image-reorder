@@ -238,7 +238,28 @@ class TestCopy:
         target.mkdir()
         result = invoke(["copy", str(source), str(target)])
         assert result.exit_code == 0
-        copy_images.assert_called_once_with(source, target, offsets={})
+        copy_images.assert_called_once_with(source, target, start_index=1, offsets={})
+
+    @pytest.mark.parametrize("start_index", [-100, -10, -2, -1])
+    def test_valid_invalid_start_index(self, working_dir, start_index):
+        source = working_dir / "source"
+        target = working_dir / "target"
+        source.mkdir()
+        target.mkdir()
+        result = invoke(["copy", "--start-index", str(start_index), str(source), str(target)])
+        assert result.exit_code == 2
+        assert "Invalid value for '--start-index' / '-s'" in result.output
+
+    @pytest.mark.parametrize("start_index", [0, 1, 2, 10, 100])
+    @patch("reorder.cli.copy_images")
+    def test_valid_valid_start_index(self, copy_images, working_dir, start_index):
+        source = working_dir / "source"
+        target = working_dir / "target"
+        source.mkdir()
+        target.mkdir()
+        result = invoke(["copy", "--start-index", str(start_index), str(source), str(target)])
+        assert result.exit_code == 0
+        copy_images.assert_called_once_with(source, target, start_index=start_index, offsets={})
 
     @patch("reorder.cli.copy_images")
     def test_valid_target_does_not_exist(self, copy_images, working_dir):
@@ -247,7 +268,7 @@ class TestCopy:
         source.mkdir()
         result = invoke(["copy", str(source), str(target)])
         assert result.exit_code == 0
-        copy_images.assert_called_once_with(source, target, offsets={})
+        copy_images.assert_called_once_with(source, target, start_index=1, offsets={})
         assert target.is_dir()  # make sure it was created
 
     @patch("reorder.cli.copy_images")
@@ -261,6 +282,7 @@ class TestCopy:
         copy_images.assert_called_once_with(
             source,
             target,
+            start_index=1,
             offsets={"PowerShot A70": timedelta(hours=6, minutes=55)},
         )
 
@@ -275,6 +297,7 @@ class TestCopy:
         copy_images.assert_called_once_with(
             source,
             target,
+            start_index=1,
             offsets={
                 "a": timedelta(hours=6, minutes=55),
                 "b": timedelta(minutes=-3),

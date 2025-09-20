@@ -43,7 +43,9 @@ Usage: reorder copy [OPTIONS] <source-dir> <target-dir>
   target folder will be created if it does not already exist.
 
   The copied filenames will get a prefix like "image001__".  This way, you can
-  sort the images by filename, and they'll have the correct order.
+  sort the images by filename, and they'll have the correct order.  The file
+  names start with index 1 by default, but you can use --start-index to change
+  this.
 
   If the clocks on the cameras are not in sync, you may optionally provide a
   time offset by camera model.  The configured hours and minutes will be added
@@ -53,7 +55,8 @@ Usage: reorder copy [OPTIONS] <source-dir> <target-dir>
   the --offset switch multiple times.
 
 Options:
-  -o, --offset <offset>  Time offset like 'PowerShot A70=+06:55'
-  -h, --help             Show this message and exit.
+  -o, --offset <offset>      Time offset like 'PowerShot A70=+06:55'
+  -s, --start-index <index>  Start index to use'  [x>=0]
+  -h, --help                 Show this message and exit.
 ```
 
