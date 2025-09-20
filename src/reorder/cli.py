@@ -105,7 +105,16 @@ def analyze(source: Path) -> None:
     help="Time offset like 'PowerShot A70=+06:55'",
     multiple=True,
 )
-def copy(source: Path, target: Path, offsets: tuple[str]) -> None:
+@click.option(
+    "--start-index",
+    "-s",
+    "start_index",
+    metavar="<index>",
+    help="Start index to use'",
+    type=click.IntRange(min=0),
+    default=1,
+)
+def copy(source: Path, target: Path, start_index: int, offsets: tuple[str]) -> None:
     """
     Reorder images from a source directory into a target directory.
 
@@ -114,7 +123,9 @@ def copy(source: Path, target: Path, offsets: tuple[str]) -> None:
     target folder will be created if it does not already exist.
 
     The copied filenames will get a prefix like "image001__".  This way, you can
-    sort the images by filename, and they'll have the correct order.
+    sort the images by filename, and they'll have the correct order.  The file
+    names start with index 1 by default, but you can use --start-index to change
+    this.
 
     If the clocks on the cameras are not in sync, you may optionally provide a
     time offset by camera model.  The configured hours and minutes will be added
@@ -126,4 +137,4 @@ def copy(source: Path, target: Path, offsets: tuple[str]) -> None:
     if not target.is_dir():
         target.mkdir(parents=True)
     parsed = _parse_offsets(offsets)
-    copy_images(source, target, offsets=parsed)
+    copy_images(source, target, start_index=start_index, offsets=parsed)

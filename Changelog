@@ -2,6 +2,7 @@ Version 0.3.1     unreleased
 
 	* Pull in latest version of run-script-framework.
 	* Fix poetry-dynamic-versioning version in both places in `pyproject.toml`.
+	* Add new --start-index switch to the `reorder copy` command.
 
 Version 0.3.0     17 Sep 2025
 

@@ -41,3 +41,15 @@ class TestCopyImages:
             target / "image3__pixel2.jpg",
             target / "image4__panasonic.jpg",
         ]
+
+    def test_copy_images_with_start_index(self, tmp_path):
+        target = tmp_path / "target"
+        target.mkdir()
+        copy_images(IMAGE_DIR, target, start_index=100, offsets=None)
+        copied = sorted([path for path in target.rglob("*") if path.is_file()])
+        assert copied == [
+            target / "image100__nodate.jpg",
+            target / "image101__pixel5a.jpg",
+            target / "image102__pixel2.jpg",
+            target / "image103__panasonic.jpg",
+        ]
