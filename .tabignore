@@ -1,6 +1,7 @@
 Changelog
 docs/Makefile
 docs/make.bat
+src/tests/reorder/fixtures/samples/nodate.jpg
 src/tests/reorder/fixtures/samples/panasonic.jpg
 src/tests/reorder/fixtures/samples/pixel2.jpg
 src/tests/reorder/fixtures/samples/pixel5a.jpg
