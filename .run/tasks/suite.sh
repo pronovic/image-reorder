@@ -17,6 +17,7 @@ task_suite() {
       run_task checks
       run_task build
       run_task test -c
+      echo ""
       run_command pythonversion
    fi
 }
