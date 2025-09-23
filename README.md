@@ -1,12 +1,11 @@
 # Image Reorder
 
 [![pypi](https://img.shields.io/pypi/v/image-reorder.svg)](https://pypi.org/project/image-reorder/)
-[![license](https://img.shields.io/pypi/l/image-reorder.svg)](https://github.com/pronovic/image-reorder/blob/main/LICENSE)
+[![license](https://img.shields.io/github/license/pronovic/image-reorder)](https://github.com/pronovic/image-reorder/blob/main/LICENSE)
 [![wheel](https://img.shields.io/pypi/wheel/image-reorder.svg)](https://pypi.org/project/image-reorder/)
 [![python](https://img.shields.io/pypi/pyversions/image-reorder.svg)](https://pypi.org/project/image-reorder/)
 [![Test Suite](https://github.com/pronovic/image-reorder/workflows/Test%20Suite/badge.svg)](https://github.com/image-reorder/actions?query=workflow%3A%22Test+Suite%22)
 [![coverage](https://coveralls.io/repos/github/image-reorder/badge.svg?branch=main)](https://coveralls.io/github/pronovic/image-reorder?branch=main)
-[![Poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json)](https://python-poetry.org/)
 
 Reorder images from multiple cameras into a single folder.
 
