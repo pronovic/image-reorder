@@ -39,6 +39,7 @@ The [`run`](run) script provides shortcuts for common developer tasks:
 
 ```
 $ ./run --help
+
 ------------------------------------
 Shortcuts for common developer tasks
 ------------------------------------
@@ -62,6 +63,10 @@ Basic tasks:
 Additional tasks:
 
 - run release: Tag and release the code, triggering GHA to publish artifacts
+
+The Python interpreter version is controlled by the .python-version file.  To
+test with a different version of Python temporarily, set $UV_PYTHON in your
+shell, and execute 'run install'.  Make sure to unset and reinstall when done.
 ```
 
 ## Integration with PyCharm
