@@ -1,3 +1,7 @@
+Version 0.5.1     unreleased
+
+	* Fix windows commands for external tools.
+
 Version 0.5.0     24 Sep 2025
 
 	* Pull in latest version of run-script-framework.
