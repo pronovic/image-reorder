@@ -1,6 +1,7 @@
 Version 0.5.1     unreleased
 
 	* Fix windows commands for external tools.
+	* Upgrade pillow to 12.1.1 to address CVE-2026-25990.
 
 Version 0.5.0     24 Sep 2025
 
