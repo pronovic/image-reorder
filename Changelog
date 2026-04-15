@@ -1,5 +1,6 @@
 Version 0.5.2     unreleased
 
+	* Address Dependabot warning for pillow.
 	* Upgrade pygments transitive dependency to address CVE-2026-4539.
 	* Add support for Visual Studio Code as an IDE.
 	* Use pytest-cov for test coverage, for more consistency.
