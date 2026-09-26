@@ -13,7 +13,7 @@ from PIL.ExifTags import TAGS
 from reorder.interface import ImageData
 
 _IMAGE_PREFIX = "image"
-_MIN_DATE = datetime(MINYEAR, 1, 1).isoformat()  # noqa: DTZ001
+_MIN_DATE = datetime(MINYEAR, 1, 1).isoformat()  # ruff: ignore[call-datetime-without-tzinfo]
 _EMPTY_DATE = "0000:00:00 00:00:00"  # some cameras use this when no date has been set
 
 
@@ -51,7 +51,7 @@ def _get_image_data(path: Path, offsets: dict[str, timedelta] | None) -> ImageDa
     date_time = tags.get("DateTime", None)
     exif_date = None
     if date_time and date_time != _EMPTY_DATE:
-        exif_date = datetime.strptime(date_time, "%Y:%m:%d %H:%M:%S")  # noqa: DTZ007
+        exif_date = datetime.strptime(date_time, "%Y:%m:%d %H:%M:%S")  # ruff: ignore[call-datetime-strptime-without-zone]
         if offsets and model in offsets:
             exif_date += offsets[model]
     return ImageData(path=path, model=model, exif_date=exif_date)
@@ -66,6 +66,6 @@ def _get_exif_tags(path: Path) -> dict[str | int, Any]:
             for tag, value in image.getexif().items():
                 decoded = TAGS.get(tag, tag)
                 tags[decoded] = value
-    except Exception:  # noqa: BLE001,S110
+    except Exception:  # ruff: ignore[blind-except, try-except-pass]
         pass
     return tags
