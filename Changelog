@@ -6,6 +6,7 @@ Version 0.5.2     unreleased
 	* Add support for Visual Studio Code as an IDE.
 	* Use pytest-cov for test coverage, for more consistency.
 	* Fix pytest-testdox output in GHA Windows runner.
+	* Run the GHA matrix build on free-threaded 3.14t and 3.15t.
 
 Version 0.5.1     17 Feb 2026
 
