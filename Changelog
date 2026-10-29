@@ -1,3 +1,7 @@
+Version 0.5.3     unreleased
+
+	* Update pillow to address multiple critical and high CVEs.
+
 Version 0.5.2     26 Sep 2026
 
 	* Add support for Python v3.15 and drop support for v3.11.
